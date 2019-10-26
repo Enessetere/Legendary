@@ -25,7 +25,7 @@ public class PopUpWindow {
         stage.initStyle(StageStyle.DECORATED);
         stage.setResizable(false);
         stage.setTitle("Marvel Legendary - Deck Building Game - Warning!");
-        stage.getIcons().add(new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\icon.png"));
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
         Pane pane = new Pane();
         Label label = new Label(text);
         label.setLayoutY(20);
@@ -55,7 +55,7 @@ public class PopUpWindow {
         stage.initStyle(StageStyle.DECORATED);
         stage.setResizable(false);
         stage.setTitle("Marvel Legendary - Deck Building Game - Warning!");
-        stage.getIcons().add(new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\icon.png"));
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
         Pane pane = new Pane();
         Label label = new Label(text);
         label.setLayoutY(20);
@@ -78,7 +78,7 @@ public class PopUpWindow {
         stage.initStyle(StageStyle.DECORATED);
         stage.setResizable(false);
         stage.setTitle("Marvel Legendary - Deck Building Game - Warning!");
-        stage.getIcons().add(new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\icon.png"));
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
         Pane pane = new Pane();
         StringBuilder textBuilder = new StringBuilder(text);
         for(String string : set) {
@@ -109,7 +109,7 @@ public class PopUpWindow {
         stage.setX(dimension.getWidth() / 2.0 - 200);
         stage.setY(dimension.getHeight() / 2.0 - 300);
         stage.setTitle("Marvel Legendary - Deck Building Game - Warning!");
-        stage.getIcons().add(new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\icon.png"));
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
         Pane pane = new Pane();
         Label label = new Label();
         label.setLayoutX(0);

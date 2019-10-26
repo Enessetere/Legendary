@@ -43,7 +43,7 @@ public class StartUpWindow extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(createNewScene(SceneEnum.INIT_SCENE, stage));
         stage.setTitle("Marvel Legendary - Deck Building Game");
-        stage.getIcons().add(new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\icon.png"));
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
         stage.show();
     }
 
@@ -64,7 +64,7 @@ public class StartUpWindow extends Application {
         pane = new Pane();
         switch (sceneEnum) {
             case INIT_SCENE: {
-                Image image = new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\intro.png");
+                Image image = new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\intro.png");
                 BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER, new BackgroundSize(dimension.width, dimension.height, false, false, false, true));
                 pane.setBackground(new Background(backgroundImage));
@@ -89,14 +89,14 @@ public class StartUpWindow extends Application {
                 pane.getChildren().add(newGameButton);
                 pane.getChildren().add(creditsButton);
                 pane.getChildren().add(exitGameButton);
-                Image image = new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\background.jpg");
+                Image image = new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\background.jpg");
                 BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER, new BackgroundSize(dimension.width, dimension.height, false, false, true, false));
                 pane.setBackground(new Background(backgroundImage));
                 break;
             }
             case NEW_GAME_SCENE: {
-                Image image = new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\board.png", dimension.getWidth(), dimension.height, false, false);
+                Image image = new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\board.png", dimension.getWidth(), dimension.height, false, false);
                 pane.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
                 schemeLabel = new Label();
                 schemeLabel.setLayoutX(mastermindAndSchemeCardX);
@@ -219,7 +219,7 @@ public class StartUpWindow extends Application {
                 break;
             }
             case CREDITS_SCENE: {
-                Image image = new Image("file:D:\\Projects\\Legendary\\src\\main\\resources\\images\\intro.png");
+                Image image = new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\intro.png");
                 BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER, new BackgroundSize(dimension.width, dimension.height, false, false, false, true));
                 Label label = new Label();
