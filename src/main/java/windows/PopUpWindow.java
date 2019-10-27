@@ -59,7 +59,7 @@ public class PopUpWindow {
         Pane pane = new Pane();
         Label label = new Label(text);
         label.setLayoutY(20);
-        label.setLayoutX(90);
+        label.setLayoutX(50);
         Button resumeWindowButton = new Button("Resume");
         resumeWindowButton.setLayoutX(80);
         resumeWindowButton.setLayoutY(50);

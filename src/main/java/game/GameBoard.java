@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameBoard {
+public class GameBoard{
     private static int numberOfPlayers;
     private static int numberOfHeroes;
     private static int numberOfVillains;
@@ -295,6 +295,7 @@ public class GameBoard {
             b.setVisible(true);
             heroDeck.remove(index);
         } else {
+            b.setVisible(false);
             new PopUpWindow("Hero Deck is empty!");
         }
     }
@@ -537,8 +538,8 @@ public class GameBoard {
     }
 
     public static void cardsUsed() {
-        new PopUpWindow("Heroes used:\n", heroGroups);
-        new PopUpWindow("Enemies used:\n", villainGroups);
+        new PopUpWindow("Heroes being used:\n", heroGroups);
+        new PopUpWindow("Enemies being used:\n", villainGroups);
     }
 
     public static void getRandomTactic() {
@@ -547,8 +548,27 @@ public class GameBoard {
             int index = random.nextInt(mastermindDeck.size() - 1) + 1;
             new PopUpWindow(mastermindDeck.get(index).getBackground());
             mastermindDeck.remove(index);
+            if(mastermindDeck.size() == 1) {
+                new PopUpWindow("Mastermind has been defeated.");
+            }
         } else {
-            new PopUpWindow("Mastermind deck is empty.");
+            new PopUpWindow("Mastermind has been defeated.");
         }
+    }
+
+    public static String getVillainDeckSize() {
+        return (villainDeck.size() > 2) ? villainDeck.size() - 1 + " cards left." : (villainDeck.size() == 2) ? "1 card left." : "No cards left.";
+    }
+
+    public static String getHeroDeckSize() {
+        return (heroDeck.size() > 2) ? heroDeck.size() - 1 + " cards left." : (heroDeck.size() == 2) ? "1 card left." : "No cards left.";
+    }
+
+    public static String getInitVillainDeckSize() {
+        return villainDeck.size() + " cards left.";
+    }
+
+    public static String getInitHeroDeckSize() {
+        return heroDeck.size() + " cards left.";
     }
 }

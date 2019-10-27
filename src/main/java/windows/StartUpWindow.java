@@ -2,19 +2,21 @@ package windows;
 
 import game.GameBoard;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,10 @@ public class StartUpWindow extends Application {
     private double startVillainDeckHeight = dimension.getHeight() * 0.3745;
     private double mastermindAndSchemeCardX = dimension.getWidth() * 0.054;
     private double schemeCardY = dimension.getHeight() * 0.06597;
-    private List<Button> heroButtons;
-    private List<Button> villainButtons;
     private Button mastermindButton;
     private Label schemeLabel;
+    private List<Button> heroButtons;
+    private List<Button> villainButtons;
 
     @Override
     public void start(Stage stage) {
@@ -173,43 +175,63 @@ public class StartUpWindow extends Application {
                 villainButtons.add(villainThirdSlotButton);
                 villainButtons.add(villainFourthSlotButton);
                 villainButtons.add(villainFifthSlotButton);
-                villainDeckButton.setOnAction(actionEvent -> GameBoard.getRandomVillain(villainButtons));
+                Label villainCardsLabel = new Label("x");
+                villainDeckButton.setOnAction(actionEvent -> getCard(villainCardsLabel));
                 pane.getChildren().add(villainDeckButton);
+                villainCardsLabel.setLayoutX(startVillainDeckWidth);
+                villainCardsLabel.setLayoutY(startVillainSetHeight + (deckCardHeight/2));
+                villainCardsLabel.setMinWidth(deckCardWidth);
+                villainCardsLabel.setTextFill(Color.WHITE);
+                villainCardsLabel.setFont(new Font("Comic Sans MS Bold Italic", 20));
+                villainCardsLabel.setAlignment(Pos.CENTER);
+                villainCardsLabel.setText(GameBoard.getInitVillainDeckSize());
+                pane.getChildren().add(villainCardsLabel);
+                Label heroesCardsLabel = new Label("x");
                 Button heroFirstSlotButton = new Button();
                 heroFirstSlotButton.setLayoutX(startVillainAndHeroSetWidth);
                 heroFirstSlotButton.setLayoutY(startHeroSetHeight);
                 heroFirstSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFirstSlotButton.setOnAction(actionEvent -> GameBoard.getRandomHero(heroFirstSlotButton));
+                heroFirstSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFirstSlotButton));
                 heroFirstSlotButton.setVisible(false);
                 pane.getChildren().add(heroFirstSlotButton);
                 Button heroSecondSlotButton = new Button();
                 heroSecondSlotButton.setLayoutX(startVillainAndHeroSetWidth + cardWidth);
                 heroSecondSlotButton.setLayoutY(startHeroSetHeight);
                 heroSecondSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroSecondSlotButton.setOnAction(actionEvent -> GameBoard.getRandomHero(heroSecondSlotButton));
+                heroSecondSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroSecondSlotButton));
                 heroSecondSlotButton.setVisible(false);
                 pane.getChildren().add(heroSecondSlotButton);
                 Button heroThirdSlotButton = new Button();
                 heroThirdSlotButton.setLayoutX(startVillainAndHeroSetWidth + 2 * cardWidth);
                 heroThirdSlotButton.setLayoutY(startHeroSetHeight);
                 heroThirdSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroThirdSlotButton.setOnAction(actionEvent -> GameBoard.getRandomHero(heroThirdSlotButton));
+                heroThirdSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroThirdSlotButton));
                 heroThirdSlotButton.setVisible(false);
                 pane.getChildren().add(heroThirdSlotButton);
                 Button heroFourthSlotButton = new Button();
                 heroFourthSlotButton.setLayoutX(startVillainAndHeroSetWidth + 3 * cardWidth);
                 heroFourthSlotButton.setLayoutY(startHeroSetHeight);
                 heroFourthSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFourthSlotButton.setOnAction(actionEvent -> GameBoard.getRandomHero(heroFourthSlotButton));
+                heroFourthSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFourthSlotButton));
                 heroFourthSlotButton.setVisible(false);
                 pane.getChildren().add(heroFourthSlotButton);
                 Button heroFifthSlotButton = new Button();
                 heroFifthSlotButton.setLayoutX(startVillainAndHeroSetWidth + 4 * cardWidth);
                 heroFifthSlotButton.setLayoutY(startHeroSetHeight);
                 heroFifthSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFifthSlotButton.setOnAction(actionEvent -> GameBoard.getRandomHero(heroFifthSlotButton));
+                heroFifthSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFifthSlotButton));
                 heroFifthSlotButton.setVisible(false);
                 pane.getChildren().add(heroFifthSlotButton);
+                heroesCardsLabel.setLayoutX(startVillainDeckWidth);
+                heroesCardsLabel.setLayoutY(startHeroSetHeight + (deckCardHeight/2));
+                heroesCardsLabel.setMinWidth(deckCardWidth);
+                heroesCardsLabel.setTextFill(Color.WHITE);
+                heroesCardsLabel.setFont(new Font("Comic Sans MS Bold Italic", 20));
+                heroesCardsLabel.setAlignment(Pos.CENTER);
+                heroesCardsLabel.setText(GameBoard.getInitHeroDeckSize());
+                heroesCardsLabel.setDisable(true);
+                villainCardsLabel.setDisable(true);
+                pane.getChildren().add(heroesCardsLabel);
                 heroButtons = new ArrayList<>();
                 heroButtons.add(heroFirstSlotButton);
                 heroButtons.add(heroSecondSlotButton);
@@ -261,6 +283,7 @@ public class StartUpWindow extends Application {
             GameBoard.getMastermind(mastermindButton);
             GameBoard.cardsUsed();
             for(Button b : heroButtons) {
+                update((Label)stage.getScene().getRoot().getChildrenUnmodifiable().get(14), true);
                 GameBoard.getRandomHero(b);
             }
         }
@@ -268,6 +291,8 @@ public class StartUpWindow extends Application {
 
     private void setPlayerNumber() {
         Stage stage = new Stage();
+        pane = new Pane();
+        pane.setPrefSize(330, 120);
         stage.setResizable(false);
         stage.setTitle("Marvel Legendary - Deck Building Game");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -295,14 +320,12 @@ public class StartUpWindow extends Application {
         fourPlayersButton.setPrefSize(50, 50);
         fourPlayersButton.setLayoutX(200);
         fourPlayersButton.setLayoutY(50);
-        fourPlayersButton.setOnAction(actionEvent -> createGameBoard(4, stage));
+        fourPlayersButton.setOnMouseClicked(mouseEvent -> createGameBoard(4, stage));
         Button fivePlayersButton = new Button("5");
         fivePlayersButton.setPrefSize(50, 50);
         fivePlayersButton.setLayoutX(260);
         fivePlayersButton.setLayoutY(50);
         fivePlayersButton.setOnAction(actionEvent -> createGameBoard(5, stage));
-        pane = new Pane();
-        pane.setPrefSize(330, 120);
         pane.getChildren().add(label);
         pane.getChildren().add(onePlayerButton);
         pane.getChildren().add(twoPlayersButton);
@@ -313,8 +336,30 @@ public class StartUpWindow extends Application {
         stage.showAndWait();
     }
 
+    private void getCard(Label label, Button button) {
+        update(label, true);
+        GameBoard.getRandomHero(button);
+    }
+
+    private void getCard(Label label) {
+        update(label, false);
+        GameBoard.getRandomVillain(villainButtons);
+
+    }
+
     private void createGameBoard(int playerNumber, Stage stage) {
-        new GameBoard(playerNumber);
+        Task task = new Task() {
+            @Override
+            protected Object call() {
+                return new GameBoard(playerNumber);
+            }
+        };
+        new Thread(task).start();
+        while (!task.isDone());
         stage.close();
+    }
+
+    private void update(Label label, boolean isHero) {
+        label.setText((isHero) ? GameBoard.getHeroDeckSize() : GameBoard.getVillainDeckSize());
     }
 }
