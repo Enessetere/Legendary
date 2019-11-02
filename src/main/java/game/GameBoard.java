@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameBoard{
+public class GameBoard {
     private static int numberOfPlayers;
     private static int numberOfHeroes;
     private static int numberOfVillains;
@@ -548,7 +548,7 @@ public class GameBoard{
             int index = random.nextInt(mastermindDeck.size() - 1) + 1;
             new PopUpWindow(mastermindDeck.get(index).getBackground());
             mastermindDeck.remove(index);
-            if(mastermindDeck.size() == 1) {
+            if (mastermindDeck.size() == 1) {
                 new PopUpWindow("Mastermind has been defeated.");
             }
         } else {

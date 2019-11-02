@@ -16,7 +16,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +42,9 @@ public class StartUpWindow extends Application {
     @Override
     public void start(Stage stage) {
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(createNewScene(SceneEnum.INIT_SCENE, stage));
         stage.setTitle("Marvel Legendary - Deck Building Game");
         stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
+        stage.setScene(createNewScene(SceneEnum.INIT_SCENE, stage));
         stage.show();
     }
 
@@ -111,7 +110,7 @@ public class StartUpWindow extends Application {
                 mastermindButton.setLayoutY(startVillainDeckHeight);
                 mastermindButton.setPrefSize(deckCardWidth, deckCardHeight);
                 mastermindButton.setVisible(false);
-                mastermindButton.setOnAction(actionEvent -> GameBoard.getRandomTactic());
+                mastermindButton.setOnAction(actionEvent -> getTactic(stage));
                 pane.getChildren().add(mastermindButton);
                 Button villainFirstSlotButton = new Button();
                 villainFirstSlotButton.setPrefSize(cardWidth, cardHeight);
@@ -176,10 +175,10 @@ public class StartUpWindow extends Application {
                 villainButtons.add(villainFourthSlotButton);
                 villainButtons.add(villainFifthSlotButton);
                 Label villainCardsLabel = new Label("x");
-                villainDeckButton.setOnAction(actionEvent -> getCard(villainCardsLabel));
+                villainDeckButton.setOnAction(actionEvent -> getCard(stage));
                 pane.getChildren().add(villainDeckButton);
                 villainCardsLabel.setLayoutX(startVillainDeckWidth);
-                villainCardsLabel.setLayoutY(startVillainSetHeight + (deckCardHeight/2));
+                villainCardsLabel.setLayoutY(startVillainSetHeight + (deckCardHeight / 2));
                 villainCardsLabel.setMinWidth(deckCardWidth);
                 villainCardsLabel.setTextFill(Color.WHITE);
                 villainCardsLabel.setFont(new Font("Comic Sans MS Bold Italic", 20));
@@ -191,39 +190,39 @@ public class StartUpWindow extends Application {
                 heroFirstSlotButton.setLayoutX(startVillainAndHeroSetWidth);
                 heroFirstSlotButton.setLayoutY(startHeroSetHeight);
                 heroFirstSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFirstSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFirstSlotButton));
+                heroFirstSlotButton.setOnAction(actionEvent -> getCard(stage, heroFirstSlotButton));
                 heroFirstSlotButton.setVisible(false);
                 pane.getChildren().add(heroFirstSlotButton);
                 Button heroSecondSlotButton = new Button();
                 heroSecondSlotButton.setLayoutX(startVillainAndHeroSetWidth + cardWidth);
                 heroSecondSlotButton.setLayoutY(startHeroSetHeight);
                 heroSecondSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroSecondSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroSecondSlotButton));
+                heroSecondSlotButton.setOnAction(actionEvent -> getCard(stage, heroSecondSlotButton));
                 heroSecondSlotButton.setVisible(false);
                 pane.getChildren().add(heroSecondSlotButton);
                 Button heroThirdSlotButton = new Button();
                 heroThirdSlotButton.setLayoutX(startVillainAndHeroSetWidth + 2 * cardWidth);
                 heroThirdSlotButton.setLayoutY(startHeroSetHeight);
                 heroThirdSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroThirdSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroThirdSlotButton));
+                heroThirdSlotButton.setOnAction(actionEvent -> getCard(stage, heroThirdSlotButton));
                 heroThirdSlotButton.setVisible(false);
                 pane.getChildren().add(heroThirdSlotButton);
                 Button heroFourthSlotButton = new Button();
                 heroFourthSlotButton.setLayoutX(startVillainAndHeroSetWidth + 3 * cardWidth);
                 heroFourthSlotButton.setLayoutY(startHeroSetHeight);
                 heroFourthSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFourthSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFourthSlotButton));
+                heroFourthSlotButton.setOnAction(actionEvent -> getCard(stage, heroFourthSlotButton));
                 heroFourthSlotButton.setVisible(false);
                 pane.getChildren().add(heroFourthSlotButton);
                 Button heroFifthSlotButton = new Button();
                 heroFifthSlotButton.setLayoutX(startVillainAndHeroSetWidth + 4 * cardWidth);
                 heroFifthSlotButton.setLayoutY(startHeroSetHeight);
                 heroFifthSlotButton.setPrefSize(cardWidth, cardHeight);
-                heroFifthSlotButton.setOnAction(actionEvent -> getCard(heroesCardsLabel, heroFifthSlotButton));
+                heroFifthSlotButton.setOnAction(actionEvent -> getCard(stage, heroFifthSlotButton));
                 heroFifthSlotButton.setVisible(false);
                 pane.getChildren().add(heroFifthSlotButton);
                 heroesCardsLabel.setLayoutX(startVillainDeckWidth);
-                heroesCardsLabel.setLayoutY(startHeroSetHeight + (deckCardHeight/2));
+                heroesCardsLabel.setLayoutY(startHeroSetHeight + (deckCardHeight / 2));
                 heroesCardsLabel.setMinWidth(deckCardWidth);
                 heroesCardsLabel.setTextFill(Color.WHITE);
                 heroesCardsLabel.setFont(new Font("Comic Sans MS Bold Italic", 20));
@@ -279,12 +278,13 @@ public class StartUpWindow extends Application {
             stage.setScene(createNewScene(SceneEnum.MENU_SCENE, stage));
         } else {
             stage.setScene(createNewScene(SceneEnum.NEW_GAME_SCENE, stage));
+            stage.setOpacity(0.6);
             GameBoard.getScheme(schemeLabel);
             GameBoard.getMastermind(mastermindButton);
             GameBoard.cardsUsed();
-            for(Button b : heroButtons) {
-                update((Label)stage.getScene().getRoot().getChildrenUnmodifiable().get(14), true);
-                GameBoard.getRandomHero(b);
+            stage.setOpacity(1);
+            for (Button b : heroButtons) {
+                getCard(stage, b);
             }
         }
     }
@@ -336,27 +336,33 @@ public class StartUpWindow extends Application {
         stage.showAndWait();
     }
 
-    private void getCard(Label label, Button button) {
-        update(label, true);
+    private void getCard(Stage stage, Button button) {
+        update((Label) stage.getScene().getRoot().getChildrenUnmodifiable().get(14), true);
+        stage.setOpacity(0.6);
         GameBoard.getRandomHero(button);
+        stage.setOpacity(1.0);
     }
 
-    private void getCard(Label label) {
-        update(label, false);
+    private void getCard(Stage stage) {
+        update((Label) stage.getScene().getRoot().getChildrenUnmodifiable().get(8), false);
+        stage.setOpacity(0.6);
         GameBoard.getRandomVillain(villainButtons);
+        stage.setOpacity(1.0);
 
+    }
+
+    private void getTactic(Stage stage) {
+        stage.setOpacity(0.6);
+        GameBoard.getRandomTactic();
+        stage.setOpacity(1.0);
     }
 
     private void createGameBoard(int playerNumber, Stage stage) {
-        Task task = new Task() {
-            @Override
-            protected Object call() {
-                return new GameBoard(playerNumber);
-            }
-        };
-        new Thread(task).start();
-        while (!task.isDone());
         stage.close();
+        Stage progress = new Stage();
+        new PopUpWindow(progress);
+        new GameBoard(playerNumber);
+        progress.close();
     }
 
     private void update(Label label, boolean isHero) {

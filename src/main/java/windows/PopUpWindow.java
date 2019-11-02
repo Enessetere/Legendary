@@ -5,15 +5,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class PopUpWindow {
     private Stage stage = new Stage();
+    public List<Label> labels;
 
     private void show() {
         stage.showAndWait();
@@ -139,6 +143,100 @@ public class PopUpWindow {
         stage.setScene(scene);
         stage.setTitle("Marvel Legendary - Deck Building Game");
         show();
+    }
+
+    public PopUpWindow(Stage stage) {
+        stage.setX((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2) - 115);
+        stage.setY((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2) - 50);
+        stage.setTitle("Loading...");
+        stage.getIcons().add(new Image("file:" + System.getProperty("user.dir") + "\\src\\main\\resources\\images\\icon.png"));
+        stage.initStyle(StageStyle.DECORATED);
+        labels = new ArrayList<>();
+        Pane pane = new Pane();
+        pane.setPrefSize(230, 100);
+        Label label0 = new Label();
+        label0.setPrefSize(20,80);
+        label0.setLayoutX(10);
+        label0.setLayoutY(10);
+        label0.setVisible(false);
+        label0.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        label0.setOnMouseClicked(mouseEvent -> stage.close());
+        Label label1 = new Label();
+        label1.setPrefSize(20,80);
+        label1.setLayoutX(31);
+        label1.setLayoutY(10);
+        label1.setVisible(false);
+        label1.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label2 = new Label();
+        label2.setPrefSize(20,80);
+        label2.setLayoutX(52);
+        label2.setLayoutY(10);
+        label2.setVisible(false);
+        label2.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label3 = new Label();
+        label3.setPrefSize(20,80);
+        label3.setLayoutX(73);
+        label3.setLayoutY(10);
+        label3.setVisible(false);
+        label3.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label4 = new Label();
+        label4.setPrefSize(20,80);
+        label4.setLayoutX(94);
+        label4.setLayoutY(10);
+        label4.setVisible(false);
+        label4.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label5 = new Label();
+        label5.setPrefSize(20,80);
+        label5.setLayoutX(115);
+        label5.setLayoutY(10);
+        label5.setVisible(false);
+        label5.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label6 = new Label();
+        label6.setPrefSize(20,80);
+        label6.setLayoutX(136);
+        label6.setLayoutY(10);
+        label6.setVisible(false);
+        label6.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label7 = new Label();
+        label7.setPrefSize(20,80);
+        label7.setLayoutX(157);
+        label7.setLayoutY(10);
+        label7.setVisible(false);
+        label7.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label8 = new Label();
+        label8.setPrefSize(20,80);
+        label8.setLayoutX(178);
+        label8.setLayoutY(10);
+        label8.setVisible(false);
+        label8.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        Label label9 = new Label();
+        label9.setPrefSize(20,80);
+        label9.setLayoutX(199);
+        label9.setLayoutY(10);
+        label9.setVisible(false);
+        label9.setBackground(new Background(new BackgroundFill(Color.DARKBLUE, null, null)));
+        labels.add(label0);
+        labels.add(label1);
+        labels.add(label2);
+        labels.add(label3);
+        labels.add(label4);
+        labels.add(label5);
+        labels.add(label6);
+        labels.add(label7);
+        labels.add(label8);
+        labels.add(label9);
+        pane.getChildren().add(label0);
+        pane.getChildren().add(label1);
+        pane.getChildren().add(label2);
+        pane.getChildren().add(label3);
+        pane.getChildren().add(label4);
+        pane.getChildren().add(label5);
+        pane.getChildren().add(label6);
+        pane.getChildren().add(label7);
+        pane.getChildren().add(label8);
+        pane.getChildren().add(label9);
+        stage.setScene(new Scene(pane));
+        stage.show();
     }
 
     private void exitToMenu(Stage parentStage) {
