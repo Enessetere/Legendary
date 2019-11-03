@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class PopUpWindow {
     private Stage stage = new Stage();
-    public List<Label> labels;
+    private List<Label> labels;
 
     private void show() {
         stage.showAndWait();
@@ -145,7 +145,7 @@ public class PopUpWindow {
         show();
     }
 
-    public PopUpWindow(Stage stage) {
+    PopUpWindow(Stage stage) {
         stage.setX((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2) - 115);
         stage.setY((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2) - 50);
         stage.setTitle("Loading...");
@@ -237,6 +237,10 @@ public class PopUpWindow {
         pane.getChildren().add(label9);
         stage.setScene(new Scene(pane));
         stage.show();
+    }
+
+    public List<Label> getLabels () {
+        return labels;
     }
 
     private void exitToMenu(Stage parentStage) {

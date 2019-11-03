@@ -2,7 +2,6 @@ package windows;
 
 import game.GameBoard;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
